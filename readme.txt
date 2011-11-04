@@ -1,7 +1,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Theme for ProjectPier
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Name: Kamp Pro
+Name: Kamp Pro 2
 Revision: 0.0.1
 Compatibility: Projectpier 0.8.0
 Author: Andrew Dotson (http://www.andrewdotson.com)
