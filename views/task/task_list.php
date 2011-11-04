@@ -14,14 +14,14 @@
     <div class="task-list-util">
       <?php
       if ($task_list->canEdit(logged_user())) {
-        echo '<a class="edit-task-list" href="' . $task_list->getEditUrl() . '">' . lang('edit') . '</a>';
+        echo '<a href="' . $task_list->getEditUrl() . '"><img src="'.get_image_url('/icons/edit.png').'" height="12" alt="' . lang('edit') . '" /></a>';
       } // if
       if (ProjectTaskList::canAdd(logged_user(), active_project())) {
-        echo '<a class="copy-task-list" href="' . $task_list->getCopyUrl() . '">' . lang('copy') . '</a>';
-        echo '<a class="move-task-list" href="' . $task_list->getMoveUrl() . '">' . lang('move') . '</a>';
+        echo '<a href="' . $task_list->getCopyUrl() . '"><img src="'.get_image_url('/icons/copy.png').'" height="12" alt="' . lang('copy') . '" /></a>';
+        echo '<a href="' . $task_list->getMoveUrl() . '"><img src="'.get_image_url( '/icons/move.png' ).'" height="12" alt="' . lang( 'move' ) . '" /></a>';
       } // if
-      if ($task_list->canDelete(logged_user())) {
-        echo '<a class="block-delete delete-task-list" href="' . $task_list->getDeleteUrl() . '">' . lang('delete') . '</a>';
+      if ( $task_list->canDelete( logged_user() ) ) {
+        echo '<a href="' . $task_list->getDeleteUrl() . '"><img src="'.get_image_url( '/icons/delete.png' ).'" height="12" alt="' . lang( 'delete' ) . '" /></a>';
       } // if
       ?>
     </div>
@@ -48,6 +48,77 @@
 <?php if (plugin_active('tags')) { ?>
   <div class="taskListTags"><span><?php echo lang('tags') ?>:</span> <?php echo project_object_tags($task_list, $task_list->getProject()) ?></div>
 <?php } ?>
+<?php if (is_array($task_list->getOpenTasks())) { ?>
+  <div class="openTasks">
+    <table class="blank">
+      <?php foreach ($task_list->getOpenTasks() as $task) { ?>
+      <tr class="<?php odd_even_class($task_list_ln); ?>">
+        <!-- Task text and options -->
+        <td class="taskText">
+          <div class="wrapper">
+          <?php echo do_textile( $task->getText() ) ?>
+          
+          <?php if ( !is_null( $task->getStartDate() ) ): ?>
+          <div class="startDate"><span><?php echo lang('start date') ?>:</span>
+            <?php
+            if ($task->getStartDate()->getYear() > DateTimeValueLib::now()->getYear()) {
+              echo format_date($task->getStartDate(), null, 0);
+            } else {
+              echo format_descriptive_date($task->getStartDate(), 0);
+            }
+            ?>
+          </div>
+          <?php endif ?>
+
+          <?php if ( !is_null( $task->getDueDate() ) ): ?>
+          <div class="dueDate">
+            <span><?php echo lang('due date') ?>:</span>
+            <?php
+            if ($task->getDueDate()->getYear() > DateTimeValueLib::now()->getYear()) {
+              echo format_date($task->getDueDate(), null, 0);
+            } else {
+              echo format_descriptive_date($task->getDueDate(), 0);
+            }
+            ?>
+          </div>
+          <?php endif ?>
+
+          <?php if ( $task->getAssignedTo() ): ?>
+          <div class="task-assigned-to">
+            <span class="assignedTo"><?php echo clean( $task->getAssignedTo()->getContact()->getDisplayName() ) ?></span>
+          </div>
+          <?php endif ?>
+
+          <?php
+            $task_options = array();
+            if ($task->canEdit(logged_user())) {
+              $task_options[] = '<a href="' . $task->getEditUrl() . '"><img src="'.get_image_url('icons/edit.png').'" height="12" alt="' . lang('edit') . '" /></a>';
+            } // if
+            if ($task->canDelete(logged_user())) {
+              $task_options[] = '<a href="' . $task->getDeleteUrl() . '"><img src="'.get_image_url('icons/delete.png').'" height="12" alt="' . lang('delete') . '" /></a>';
+            } // if
+            if ($task->canView(logged_user())) {
+              $task_options[] = '<a href="' . $task->getViewUrl($on_list_page) . '"><img src="'.get_image_url('icons/view.png').'" height="12" alt="' . lang('view') . '" /></a>';
+            } // if
+            if ($cc = $task->countComments()) {
+              $task_options[] = '<a href="' . $task->getViewUrl() .'#objectComments">'. lang('comments') .'('. $cc .')</a>';
+            }
+            if ($task->canChangeStatus(logged_user())) {
+              if ($task->isOpen()) {
+                $task_options[] = '<a href="' . $task->getCompleteUrl() . '"><img src="'.get_image_url('icons/check.png').'" height="12" alt="' . lang('mark task as completed') . '" /></a>';
+              } else {
+                $task_options[] = '<span>' . lang('open task') . '</span>';
+              } // if
+            } // if
+          ?>
+          <?php if (count($task_options)) { ?>
+            <div class="options"><?php echo implode(' ', $task_options) ?></div>
+          <?php } // if ?>
+          </div>
+        </td>
+      </tr>
+      <?php } // foreach ?>
+    </table>
 <?php if ( count( $task_list_options ) || $task_list->canAddTask( logged_user() ) ): ?>
   <div class="options">
     <?php echo implode(' | ', $task_list_options) ?>
@@ -75,69 +146,6 @@
     ?>
   </div>
 <?php endif ?>
-<?php if (is_array($task_list->getOpenTasks())) { ?>
-  <div class="openTasks">
-    <table class="blank">
-<?php foreach ($task_list->getOpenTasks() as $task) { ?>
-      <tr class="<?php odd_even_class($task_list_ln); ?>">
-<!-- Task text and options -->
-        <td class="taskText">
-          <?php echo (do_textile('[' .$task->getId() . '] ' . $task->getText())) ?>
-          <?php if (!is_null($task->getStartDate())) { ?>
-          <div class="startDate"><span><?php echo lang('start date') ?>:</span>
-            <?php
-            if ($task->getStartDate()->getYear() > DateTimeValueLib::now()->getYear()) {
-              echo format_date($task->getStartDate(), null, 0);
-            } else {
-              echo format_descriptive_date($task->getStartDate(), 0);
-            }
-            ?>
-          </div>
-          <?php } // if ?>
-          <?php if (!is_null($task->getDueDate())) { ?>
-            <div class="dueDate">
-              <span><?php echo lang('due date') ?>:</span>
-              <?php
-              if ($task->getDueDate()->getYear() > DateTimeValueLib::now()->getYear()) {
-                echo format_date($task->getDueDate(), null, 0);
-              } else {
-                echo format_descriptive_date($task->getDueDate(), 0);
-              }
-              ?>
-            </div>
-          <?php } // if ?>
-          <?php
-            $task_options = array();
-            if ($task->getAssignedTo()) { 
-              $task_options[] = '<span class="assignedTo">' . clean($task->getAssignedTo()->getObjectName()) . '</span>';
-            } // if
-            if ($task->canEdit(logged_user())) {
-              $task_options[] = '<a href="' . $task->getEditUrl() . '">' . lang('edit') . '</a>';
-            } // if
-            if ($task->canDelete(logged_user())) {
-              $task_options[] = '<a href="' . $task->getDeleteUrl() . '">' . lang('delete') . '</a>';
-            } // if
-            if ($task->canView(logged_user())) {
-              $task_options[] = '<a href="' . $task->getViewUrl($on_list_page) . '">' . lang('view') . '</a>';
-            } // if
-            if ($cc = $task->countComments()) {
-              $task_options[] = '<a href="' . $task->getViewUrl() .'#objectComments">'. lang('comments') .'('. $cc .')</a>';
-            }
-            if ($task->canChangeStatus(logged_user())) {
-              if ($task->isOpen()) {
-                $task_options[] = '<a href="' . $task->getCompleteUrl() . '">' . lang('mark task as completed') . '</a>';
-              } else {
-                $task_options[] = '<span>' . lang('open task') . '</span>';
-              } // if
-            } // if
-          ?>
-          <?php if (count($task_list_options)) { ?>
-            <div class="options"><?php echo implode(' | ', $task_options) ?></div>
-          <?php } // if ?>
-        </td>
-      </tr>
-      <?php } // foreach ?>
-    </table>
   </div>
   <?php } else { ?>
     <?php //echo lang('no open task in task list') ?>

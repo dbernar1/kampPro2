@@ -1,6 +1,10 @@
 div.taskList {
   font-size: 110%;
   position: relative;
+  background: #f8f8f8;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 20px; 
 }
 
 div.taskList .desc {
@@ -18,7 +22,7 @@ div.taskList td.taskCheckbox {
 }
 .taskList .header {
 	border: none;
-  height: 23px;
+  height: 19px;
 }
 div.taskList span.assignedTo {
   font-weight: bolder;
@@ -26,6 +30,8 @@ div.taskList span.assignedTo {
 .taskList .block {
 	border: none;
 	background: none;
+  padding: 0;
+  margin: 0;
 }
 div.taskList .addTask {
   padding: 10px;
@@ -37,19 +43,14 @@ div.taskList .addTask {
 }
 div.taskList .header a.task-list-title {
 	font-size: 18px;
-	padding-top: 5px;
 	padding-bottom: 2px;
 	display: block;
   float: left;
 }
-div.taskList .header .task-list-util { float: right; position: relative; top: }
+div.taskList .header .task-list-util { float: right; position: relative; opacity: 0; }
+div.taskList:hover .header .task-list-util { opacity: 1; }
 
-div.taskList .header .task-list-util a { font-size: 13px; font-weight: normal; padding: 0 8px 0 17px; line-height: 16px; display: block; float: left; }
-.header a.edit-task-list { background: url(../../images/icons/file_edit.png) no-repeat; }
-.header a.copy-task-list { background: url(../../images/icons/copy.png) no-repeat; }
-.header a.move-task-list { background: url(../../images/icons/file_move.png) no-repeat; }
-.header a.delete-task-list { background: url(../../images/icons/file_delete.png) no-repeat; }
-
+div.taskList .header .task-list-util a { font-size: 13px; font-weight: normal; padding: 0 0 0 17px; line-height: 16px; display: block; float: left; }
 
 div.taskList .addTask a {
 	color: #d31b00;
@@ -99,3 +100,9 @@ div.taskList .taskListTags span {
 }
 
 div.add-to-task-list { display: none; }
+
+#content .taskList table td.taskText .wrapper { position: relative; padding: 20px; }
+#content .taskList table td.taskText .options { position: absolute; top: 10px; right: 10px; width: auto; margin-top: 0; padding: 0; border: 0 none; background: none; opacity: 0; }
+#content .taskList table td.taskText .options a { padding: 5px; margin-left: 5px; border: 0 none; }
+#content .taskList table td.taskText .options a:hover { background: #FFD700; }
+#content .taskList table td.taskText .wrapper:hover .options { opacity: 1; }
