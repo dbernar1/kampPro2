@@ -97,3 +97,5 @@ div.taskList .taskListTags {
 div.taskList .taskListTags span {
   font-weight: bolder;
 }
+
+div.add-to-task-list { display: none; }

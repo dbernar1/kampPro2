@@ -1,4 +1,5 @@
 $(function() {
+
   $('.selectall').click(function() {
     var checked_status = this.checked;
     var prefix = this.id;
@@ -6,9 +7,7 @@ $(function() {
       this.checked = checked_status;
     });
   });
-});
 
-$(function() {
   $('input.datepicker').datepicker({
     dateFormat: 'M j, Y',
     showOn: 'button',
@@ -16,7 +15,14 @@ $(function() {
     buttonImageOnly: true,
     constrainInput: false
   });
+
+  $( 'a.add-to-task-list' ).click( function() {
+    $( this ).next().slideToggle();
+    return false;
+  } );
+
 });
+
 var dragover = false;
 expand_or_collapse = function(obj,match_class,speedshow,speedhide){
   var children = $(obj).children();
