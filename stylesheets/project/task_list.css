@@ -18,6 +18,7 @@ div.taskList td.taskCheckbox {
 }
 .taskList .header {
 	border: none;
+  height: 23px;
 }
 div.taskList span.assignedTo {
   font-weight: bolder;
@@ -34,12 +35,22 @@ div.taskList .addTask {
   border-bottom: 1px solid #c6c6c6;
   background: #eaeaea;
 }
-div.taskList .header a {
+div.taskList .header a.task-list-title {
 	font-size: 18px;
 	padding-top: 5px;
 	padding-bottom: 2px;
 	display: block;
+  float: left;
 }
+div.taskList .header .task-list-util { float: right; position: relative; top: }
+
+div.taskList .header .task-list-util a { font-size: 13px; font-weight: normal; padding: 0 8px 0 17px; line-height: 16px; display: block; float: left; }
+.header a.edit-task-list { background: url(../../images/icons/file_edit.png) no-repeat; }
+.header a.copy-task-list { background: url(../../images/icons/copy.png) no-repeat; }
+.header a.move-task-list { background: url(../../images/icons/file_move.png) no-repeat; }
+.header a.delete-task-list { background: url(../../images/icons/file_delete.png) no-repeat; }
+
+
 div.taskList .addTask a {
 	color: #d31b00;
 	border: none;

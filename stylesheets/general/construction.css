@@ -734,11 +734,14 @@ div.advancedPagination select {
 /** Private **/
 
 div.private {
-  float: right;
-  height: 9px;
-  width: 37px;
+  float: left;
+  height: 12px;
+  width: 50px;
   overflow: hidden;
   background: url('../../images/icons/private.gif') no-repeat;
+  position: relative;
+  top: 9px;
+  left: 5px;
 }
 
 div.private span {
