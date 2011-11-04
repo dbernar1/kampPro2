@@ -50,7 +50,8 @@ div.taskList .header a.task-list-title {
 div.taskList .header .task-list-util { float: right; position: relative; opacity: 0; }
 div.taskList:hover .header .task-list-util { opacity: 1; }
 
-div.taskList .header .task-list-util a { font-size: 13px; font-weight: normal; padding: 0 0 0 17px; line-height: 16px; display: block; float: left; }
+div.taskList .header .task-list-util a { font-size: 13px; font-weight: normal; padding: 5px; margin-left: 5px; line-height: 16px; display: block; float: left; }
+div.taskList .header .task-list-util a:hover { background: #FFD700; }
 
 div.taskList .addTask a {
 	color: #d31b00;
