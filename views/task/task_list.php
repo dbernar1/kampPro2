@@ -14,14 +14,14 @@
     <div class="task-list-util">
       <?php
       if ($task_list->canEdit(logged_user())) {
-        echo '<a href="' . $task_list->getEditUrl() . '"><img src="'.get_image_url('/icons/edit.png').'" height="12" alt="' . lang('edit') . '" /></a>';
+        echo '<a href="' . $task_list->getEditUrl() . '"><img title="'.lang( 'edit' ).'" src="'.get_image_url('/icons/edit.png').'" height="12" alt="' . lang('edit') . '" /></a>';
       } // if
       if (ProjectTaskList::canAdd(logged_user(), active_project())) {
-        echo '<a href="' . $task_list->getCopyUrl() . '"><img src="'.get_image_url('/icons/copy.png').'" height="12" alt="' . lang('copy') . '" /></a>';
-        echo '<a href="' . $task_list->getMoveUrl() . '"><img src="'.get_image_url( '/icons/move.png' ).'" height="12" alt="' . lang( 'move' ) . '" /></a>';
+        echo '<a href="' . $task_list->getCopyUrl() . '"><img title="'.lang( 'copy' ).'" src="'.get_image_url('/icons/copy.png').'" height="12" alt="' . lang('copy') . '" /></a>';
+        echo '<a href="' . $task_list->getMoveUrl() . '"><img title="'.lang( 'move' ).'" src="'.get_image_url( '/icons/move.png' ).'" height="12" alt="' . lang( 'move' ) . '" /></a>';
       } // if
       if ( $task_list->canDelete( logged_user() ) ) {
-        echo '<a href="' . $task_list->getDeleteUrl() . '"><img src="'.get_image_url( '/icons/delete.png' ).'" height="12" alt="' . lang( 'delete' ) . '" /></a>';
+        echo '<a href="' . $task_list->getDeleteUrl() . '"><img title="'.lang( 'delete' ).'" src="'.get_image_url( '/icons/delete.png' ).'" height="12" alt="' . lang( 'delete' ) . '" /></a>';
       } // if
       ?>
     </div>
@@ -92,20 +92,20 @@
           <?php
             $task_options = array();
             if ($task->canEdit(logged_user())) {
-              $task_options[] = '<a href="' . $task->getEditUrl() . '"><img src="'.get_image_url('icons/edit.png').'" height="12" alt="' . lang('edit') . '" /></a>';
+              $task_options[] = '<a href="' . $task->getEditUrl() . '"><img title="'.lang( 'edit' ).'" src="'.get_image_url('icons/edit.png').'" height="12" alt="' . lang('edit') . '" /></a>';
             } // if
             if ($task->canDelete(logged_user())) {
-              $task_options[] = '<a href="' . $task->getDeleteUrl() . '"><img src="'.get_image_url('icons/delete.png').'" height="12" alt="' . lang('delete') . '" /></a>';
+              $task_options[] = '<a href="' . $task->getDeleteUrl() . '"><img title="'.lang( 'delete' ).'" src="'.get_image_url('icons/delete.png').'" height="12" alt="' . lang('delete') . '" /></a>';
             } // if
             if ($task->canView(logged_user())) {
-              $task_options[] = '<a href="' . $task->getViewUrl($on_list_page) . '"><img src="'.get_image_url('icons/view.png').'" height="12" alt="' . lang('view') . '" /></a>';
+              $task_options[] = '<a href="' . $task->getViewUrl($on_list_page) . '"><img title="'.lang( 'view' ).'" src="'.get_image_url('icons/view.png').'" height="12" alt="' . lang('view') . '" /></a>';
             } // if
             if ($cc = $task->countComments()) {
               $task_options[] = '<a href="' . $task->getViewUrl() .'#objectComments">'. lang('comments') .'('. $cc .')</a>';
             }
             if ($task->canChangeStatus(logged_user())) {
               if ($task->isOpen()) {
-                $task_options[] = '<a href="' . $task->getCompleteUrl() . '"><img src="'.get_image_url('icons/check.png').'" height="12" alt="' . lang('mark task as completed') . '" /></a>';
+                $task_options[] = '<a href="' . $task->getCompleteUrl() . '"><img title="'.lang( 'mark task as completed' ).'" src="'.get_image_url('icons/check.png').'" height="12" alt="' . lang('mark task as completed') . '" /></a>';
               } else {
                 $task_options[] = '<span>' . lang('open task') . '</span>';
               } // if
@@ -119,6 +119,10 @@
       </tr>
       <?php } // foreach ?>
     </table>
+  </div>
+  <?php } else { ?>
+    <?php //echo lang('no open task in task list') ?>
+  <?php } // if ?>
 <?php if ( count( $task_list_options ) || $task_list->canAddTask( logged_user() ) ): ?>
   <div class="options">
     <?php echo implode(' | ', $task_list_options) ?>
@@ -146,10 +150,6 @@
     ?>
   </div>
 <?php endif ?>
-  </div>
-  <?php } else { ?>
-    <?php //echo lang('no open task in task list') ?>
-  <?php } // if ?>
   <?php if (is_array($task_list->getCompletedTasks())) { ?>
   <div class="completedTasks expand-container-completed">
     <?php echo lang( $on_list_page ? 'completed tasks' : 'recently completed tasks' ), ':'; ?>
