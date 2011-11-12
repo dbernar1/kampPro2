@@ -17,3 +17,27 @@ div.projectLog tr {
 div.projectLog tr td {
   padding: 5px;
 }
+
+.logType {
+	display: block;
+	color: #fff;
+	text-align: right;
+	padding: 2px 4px;
+	width: 60px;
+}
+
+.logType.comments { background: #d01000; }
+.logType.companies { background: #374656; }
+
+.logType.projects { background: #06B4AE; }
+.logType.projectfiles { background: #818994; }
+.logType.projectfolders { background: #edeab4; }
+.logType.projectforms { background: #0689f8; }
+.logType.projectmessages { background: #2f4e7f; }
+.logType.projectmilestones { background: #7829b4; }
+.logType.projecttasklists { background: #329e33; }
+.logType.projecttasks { background: #cb7a20; }
+
+.logType.users,
+.logType.projectfilerevisions,
+.logType.projecttickets { background: yellow; color: magenta; }
