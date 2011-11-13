@@ -30,10 +30,6 @@
     <?php echo textarea_field("task[text]", array_var($task_data, 'text'), array( 'id' => 'addTaskText-'.$task_list->getId(), 'class' => 'short taskTextarea' ) ) ?>
   </div>
   <div>
-    <?php echo label_tag(lang('start date'), 'addTaskStartDate', false) ?>
-    <?php echo pick_date_widget('task_start_date', array_var($task_data, 'start_date')) ?>
-  </div>
-  <div>
     <?php echo label_tag(lang('due date'), 'addTaskDueDate', false) ?>
     <?php echo pick_date_widget('task_due_date', array_var($task_data, 'due_date')) ?>
   </div>
