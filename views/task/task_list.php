@@ -56,7 +56,32 @@
         <!-- Task text and options -->
         <td class="taskText">
           <div class="wrapper">
-          <?php echo do_textile( $task->getText() ) ?>
+          <?php echo $task->getText() ?>
+          <?php
+            $task_options = array();
+            if ($task->canEdit(logged_user())) {
+              $task_options[] = '<a href="' . $task->getEditUrl() . '"><img title="'.lang( 'edit' ).'" src="'.get_image_url('icons/edit.png').'" height="12" alt="' . lang('edit') . '" /></a>';
+            } // if
+            if ($task->canDelete(logged_user())) {
+              $task_options[] = '<a href="' . $task->getDeleteUrl() . '"><img title="'.lang( 'delete' ).'" src="'.get_image_url('icons/delete.png').'" height="12" alt="' . lang('delete') . '" /></a>';
+            } // if
+            if ($task->canView(logged_user())) {
+              $task_options[] = '<a href="' . $task->getViewUrl($on_list_page) . '"><img title="'.lang( 'view' ).'" src="'.get_image_url('icons/view.png').'" height="12" alt="' . lang('view') . '" /></a>';
+            } // if
+            if ($cc = $task->countComments()) {
+              $task_options[] = '<a href="' . $task->getViewUrl() .'#objectComments">'. lang('comments') .'('. $cc .')</a>';
+            }
+            if ($task->canChangeStatus(logged_user())) {
+              if ($task->isOpen()) {
+                $task_options[] = '<a href="' . $task->getCompleteUrl() . '"><img title="'.lang( 'mark task as completed' ).'" src="'.get_image_url('icons/check.png').'" height="12" alt="' . lang('mark task as completed') . '" /></a>';
+              } else {
+                $task_options[] = '<span>' . lang('open task') . '</span>';
+              } // if
+            } // if
+          ?>
+          <?php if (count($task_options)) { ?>
+            <div class="options"><?php echo implode(' ', $task_options) ?></div>
+          <?php } // if ?>
           
           <?php if ( !is_null( $task->getStartDate() ) ): ?>
           <div class="startDate"><span><?php echo lang('start date') ?>:</span>
@@ -89,31 +114,6 @@
           </div>
           <?php endif ?>
 
-          <?php
-            $task_options = array();
-            if ($task->canEdit(logged_user())) {
-              $task_options[] = '<a href="' . $task->getEditUrl() . '"><img title="'.lang( 'edit' ).'" src="'.get_image_url('icons/edit.png').'" height="12" alt="' . lang('edit') . '" /></a>';
-            } // if
-            if ($task->canDelete(logged_user())) {
-              $task_options[] = '<a href="' . $task->getDeleteUrl() . '"><img title="'.lang( 'delete' ).'" src="'.get_image_url('icons/delete.png').'" height="12" alt="' . lang('delete') . '" /></a>';
-            } // if
-            if ($task->canView(logged_user())) {
-              $task_options[] = '<a href="' . $task->getViewUrl($on_list_page) . '"><img title="'.lang( 'view' ).'" src="'.get_image_url('icons/view.png').'" height="12" alt="' . lang('view') . '" /></a>';
-            } // if
-            if ($cc = $task->countComments()) {
-              $task_options[] = '<a href="' . $task->getViewUrl() .'#objectComments">'. lang('comments') .'('. $cc .')</a>';
-            }
-            if ($task->canChangeStatus(logged_user())) {
-              if ($task->isOpen()) {
-                $task_options[] = '<a href="' . $task->getCompleteUrl() . '"><img title="'.lang( 'mark task as completed' ).'" src="'.get_image_url('icons/check.png').'" height="12" alt="' . lang('mark task as completed') . '" /></a>';
-              } else {
-                $task_options[] = '<span>' . lang('open task') . '</span>';
-              } // if
-            } // if
-          ?>
-          <?php if (count($task_options)) { ?>
-            <div class="options"><?php echo implode(' ', $task_options) ?></div>
-          <?php } // if ?>
           </div>
         </td>
       </tr>

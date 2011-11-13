@@ -105,7 +105,7 @@ div.add-to-task-list { display: none; }
 #content .taskList table td.taskText .wrapper { position: relative; padding: 15px 20px 20px; border-bottom: 1px dotted #bbb; }
 #content .taskList table td.taskText .wrapper:hover { background: #fff; }
 #content .taskList table tr:first-child td.taskText .wrapper { border-top: 1px dotted #bbb; }
-#content .taskList table td.taskText .options { position: absolute; top: 5px; right: 10px; width: auto; margin-top: 0; padding: 0; border: 0 none; background: none; opacity: 0; }
+#content .taskList table td.taskText .options { display: inline; width: auto; white-space: nowrap; margin-top: 0; padding: 0 0 0 10px; border: 0 none; background: none; opacity: 0; }
 #content .taskList table td.taskText .options a { padding: 5px 5px 2px; margin-left: 5px; border: 0 none; }
 #content .taskList table td.taskText .options a:hover { background: #FFD700; }
 #content .taskList table td.taskText .wrapper:hover .options { opacity: 1; }
