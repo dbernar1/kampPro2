@@ -21,6 +21,7 @@
     add_javascript_to_page('jquery.colorbox-min.js');
     add_javascript_to_page('jquery.imgareaselect.dev.js');
     add_javascript_to_page('pp-ui-behavior.js');
+    add_javascript_to_page('textarea-autogrow.js');
     ?>
 
     <?php echo render_page_head() ?>

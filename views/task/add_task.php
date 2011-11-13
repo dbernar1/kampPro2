@@ -27,7 +27,7 @@
 
   <div>
     <?php echo label_tag(lang('text'), 'addTaskText', true) ?>
-    <?php echo textarea_field("task[text]", array_var($task_data, 'text'), array('id' => 'addTaskText', 'class' => 'short')) ?>
+    <?php echo textarea_field("task[text]", array_var($task_data, 'text'), array( 'id' => 'addTaskText-'.$task_list->getId(), 'class' => 'short taskTextarea' ) ) ?>
   </div>
   <div>
     <?php echo label_tag(lang('start date'), 'addTaskStartDate', false) ?>

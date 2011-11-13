@@ -21,7 +21,10 @@ $(function() {
     return false;
   } );
 
+  $(".taskTextarea").autogrow();
+
 });
+$(document).ready(function() {  } );
 
 var dragover = false;
 expand_or_collapse = function(obj,match_class,speedshow,speedhide){
@@ -66,42 +69,20 @@ $(function(){
   $("#success").click(function () {
     $("#success").hide(1000);
   });
-});
-
-$(function(){
   $("#error").click(function () {
     $("#error").hide(1000);
   });
-});
-
-$(function(){
-  $("#formErrors").click(function () {
-    $("#formErrors").hide(1000);
-  });
-});
-
-$(function(){
-  $(".block a").click(function(e) {
-    e.stopPropagation();
-  });
-});
-
-$(function(){
+  $("a[rel='gallery'][href*='mime=image']").colorbox({photo:true});
+  $("a[rel='gallery']").not(["href*='mime=image'"]).colorbox({width:"80%", height:"80%", iframe:true});
   $(".block .checkbox").click(function(e) {
     e.stopPropagation();
   });
-});
-
-$(function(){
-  $("a[rel='gallery'][href*='mime=image']").colorbox({photo:true});
-});
-
-$(function(){
-  $("a[rel='gallery']").not(["href*='mime=image'"]).colorbox({width:"80%", height:"80%", iframe:true});
-});
-
-
-$(function(){
+  $(".block a").click(function(e) {
+    e.stopPropagation();
+  });
+  $("#formErrors").click(function () {
+    $("#formErrors").hide(1000);
+  });
   $("textarea .autosize").each(function(index){
     $(this).css({'resize':'vertical','overflow-y':'hidden'});
     var p = $(this).parent('div');
