@@ -1,34 +1,37 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>
-      <?php echo get_page_title() ?> |
-      <?php if (active_project() instanceof Project) echo clean(active_project()->getName()); ?>
-      | <?php echo clean(owner_company()->getName()) ?>
-    </title>
-    
-    <?php echo stylesheet_tag('project_website.css') ?> 
-    <?php echo stylesheet_tag('jquery/jquery-ui-1.8.6.custom.css') ?> 
-    <?php echo stylesheet_tag('colorbox/colorbox.css') ?> 
-    <?php echo meta_tag('content-type', 'text/html; charset=utf-8', true) ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> 
-    <?php echo link_tag(ROOT_URL.'favicon.ico', 'rel', 'Shortcut Icon', array("type"=>"image/x-icon")) ?>
-    <?php echo link_tag(logged_user()->getRecentActivitiesFeedUrl(), 'rel', 'alternate', array("type"=>"application/rss+xml", "title"=>lang('recent activities feed'))) ?>
-    <?php
-    add_javascript_to_page('pp.js');
-    add_javascript_to_page('jquery.min.js');
-    add_javascript_to_page('jquery-ui.min.js');
-    add_javascript_to_page('jquery.colorbox-min.js');
-    add_javascript_to_page('jquery.imgareaselect.dev.js');
-    add_javascript_to_page('pp-ui-behavior.js');
-    add_javascript_to_page('textarea-autogrow.js');
-    ?>
+<?php $owner_company_name = clean(owner_company()->getName()); ?>
+<?php $site_name = config_option('site_name', $owner_company_name); ?>
+<!DOCTYPE html>
+<html>
+<head>
+  <title><?php echo get_page_title(); ?> | <?php if (active_project() instanceof Project) echo clean(active_project()->getName()); ?> | <?php echo $site_name; ?></title>
 
-    <?php echo render_page_head() ?>
-  </head>
+  <?php echo meta_tag('content-type', 'text/html; charset=utf-8', true); ?> 
+  <?php echo meta_tag('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0', true); ?>
+  <?php echo render_page_meta(); ?> 
+
+  <?php echo link_tag(ROOT_URL.'favicon.ico', 'rel', 'shortcut icon', array("type"=>"image/x-icon")); ?> 
+  <?php echo link_tag(ROOT_URL.'favicon.ico', 'rel', 'icon', array("type"=>"image/x-icon")); ?> 
+  <?php echo link_tag(logged_user()->getRecentActivitiesFeedUrl(), 'rel', 'alternate', array("type"=>"application/rss+xml", "title"=>lang('recent activities feed'))); ?>
+  <?php echo render_page_links(); ?> 
+
+  <?php echo stylesheet_tag('project_website.css'); ?> 
+  <?php echo stylesheet_tag('jquery/jquery-ui-1.8.6.custom.css'); ?> 
+  <?php echo stylesheet_tag('colorbox/colorbox.css'); ?>
+  <?php echo render_page_inline_css(); ?> 
+
+  <?php echo javascript_tag('pp.js'); ?> 
+  <?php echo javascript_tag('jquery.min.js'); ?> 
+  <?php echo javascript_tag('jquery-ui.min.js'); ?> 
+  <?php include('inlinejs.php'); ?> 
+  <?php echo javascript_tag('jquery.colorbox-min.js'); ?> 
+  <?php echo javascript_tag('jquery.imgareaselect.dev.js'); ?> 
+  <?php echo javascript_tag('pp-ui-behavior.js'); ?> 
+  <?php echo render_page_javascript(); ?>
+  <?php echo render_page_inline_js(); ?> 
+</head>
   <body>
     <?php trace(__FILE__,'body begin') ?>
-    <?php echo render_system_notices(logged_user()) ?>
+    <?php echo render_system_notices(logged_user()); ?>
     <div id="wrapper">   
       <!-- header -->
       <div id="headerWrapper">

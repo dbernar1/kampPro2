@@ -4,12 +4,14 @@
 <html>
 <head>
   <title><?php echo get_page_title(); ?> | <?php echo $site_name; ?></title>
-
-  <?php echo meta_tag('content-type', 'text/html; charset=utf-8', true); ?>
+ 
+  <?php echo meta_tag('content-type', 'text/html; charset=utf-8', true); ?> 
+  <?php echo meta_tag('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0', true); ?>
   <?php echo render_page_meta(); ?> 
   
   <?php echo link_tag(ROOT_URL.'favicon.ico', 'rel', 'shortcut icon', array("type"=>"image/x-icon")); ?> 
   <?php echo link_tag(ROOT_URL.'favicon.ico', 'rel', 'icon', array("type"=>"image/x-icon")); ?>
+  <?php echo link_tag(logged_user()->getRecentActivitiesFeedUrl(), 'rel', 'alternate', array("type"=>"application/rss+xml", "title"=>lang('recent activities feed'))); ?>
   <?php echo render_page_links(); ?> 
 
   <?php echo stylesheet_tag('project_website.css'); ?> 
@@ -26,20 +28,18 @@
   <?php echo render_page_javascript(); ?>
   <?php echo render_page_inline_js(); ?> 
 </head>
-<body>
+<body id="body">
 <?php echo render_system_notices(logged_user()); ?>
     <div id="wrapper">
     
       <!-- header -->
       <div id="headerWrapper">
         <div id="header">
-          <h1><a href="<?php echo get_url('dashboard') ?>"><?php echo $site_name ?></a></h1>
-          <h2><a href="<?php echo get_url('administration') ?>"><?php echo lang('administration') ?></a></h2>
+          <h1><a href="<?php echo get_url('dashboard', 'index') ?>"><?php echo $site_name ?></a></h1>
           <div id="userboxWrapper"><?php echo render_user_box(logged_user()) ?></div>
         </div>
       </div>
       <!-- /header -->
-      
       <div id="tabsWrapper">
         <div id="tabs">
 <?php if (is_array(tabbed_navigation_items())) { ?>
@@ -56,12 +56,12 @@
         <div id="crumbsBlock">
           <div id="crumbs">
 <?php if (is_array(bread_crumbs())) { ?>
-            <ul class="">
+            <ul class="lavaLampNoImage">
 <?php foreach (bread_crumbs() as $bread_crumb) { ?>
 <?php if ($bread_crumb->getUrl()) { ?>
-              <li><a href="<?php echo $bread_crumb->getUrl() ?>"><?php echo clean($bread_crumb->getTitle()) ?></a>&raquo;</li>
+              <li><a href="<?php echo $bread_crumb->getUrl() ?>"><?php echo clean($bread_crumb->getTitle()) ?></a></li>
 <?php } else {?>
-              <li><span><?php echo clean($bread_crumb->getTitle()) ?></span></li>
+              <li><a href="#"><span><?php echo clean($bread_crumb->getTitle()) ?></span></a></li>
 <?php } // if {?>
 <?php } // foreach ?>
             </ul>
@@ -69,32 +69,32 @@
           </div>
         </div>
       </div>
-      
+
       <!-- content wrapper -->
       <div id="outerContentWrapper">
 <?php if (is_array(page_actions())) { ?>
-        <div id="page_actionsWrapper">
-          <div id="page_actionsBlock">
+          <div id="page_actionsWrapper">
+           <div id="page_actionsBlock">
             <div id="page_actions">
-              <ul class="lavaLampxxImage">
+              <ul>
 <?php foreach (page_actions() as $page_action) { ?>
                 <li><a href="<?php echo $page_action->getURL() ?>"><?php echo clean($page_action->getTitle()) ?></a></li>
 <?php } // foreach ?>
               </ul>
             </div>
+           </div>
           </div>
-        </div>
 <?php } else { // if ?>
         <div style="height:1px"></div>
 <?php } // if ?>
         <div id="innerContentWrapper">
 <?php if (!is_null(flash_get('success'))) { ?>
-          <div id="success" onclick="this.style.display = 'none'"><?php echo clean(flash_get('success')) ?></div>
+          <div id="success"><?php echo clean(flash_get('success')) ?></div>
 <?php } ?>
 <?php if (!is_null(flash_get('error'))) { ?>
-          <div id="error" onclick="this.style.display = 'none'"><?php echo clean(flash_get('error')) ?></div>
+          <div id="error"><?php echo clean(flash_get('error')) ?></div>
 <?php } ?>
-
+ <div style="clear:both"></div>
           <h1 id="pageTitle"><?php echo get_page_title() ?></h1>
           <div id="pageContent">
             <div id="content">
@@ -109,7 +109,7 @@
           </div>
         </div>
         
-        <!--Footer -->
+        <!--footer -->
         <div id="footer">
           <div id="copy">
 <?php if (is_valid_url($owner_company_homepage = owner_company()->getHomepage())) { ?>
@@ -120,9 +120,9 @@
           </div>
           <div id="productSignature"><?php echo product_signature() ?><span id="request_duration"><?php printf(' in %.3f seconds', (microtime(true) - $GLOBALS['request_start_time']) ); ?></span> <span id="current_datetime"><?php echo date('c/I[W]'); ?></span></div>
         </div>
+        <!--footer -->
       </div>
       <!-- /content wrapper -->
-      
     </div>
   </body>
 </html>
