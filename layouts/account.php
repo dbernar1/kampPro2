@@ -4,12 +4,13 @@
 <html>
 <head>
   <title><?php echo get_page_title(); ?> | <?php echo $site_name; ?></title>
-
+ 
   <?php echo meta_tag('content-type', 'text/html; charset=utf-8', true); ?>
   <?php echo render_page_meta(); ?> 
   
   <?php echo link_tag(ROOT_URL.'favicon.ico', 'rel', 'shortcut icon', array("type"=>"image/x-icon")); ?> 
   <?php echo link_tag(ROOT_URL.'favicon.ico', 'rel', 'icon', array("type"=>"image/x-icon")); ?>
+  <?php echo link_tag(logged_user()->getRecentActivitiesFeedUrl(), 'rel', 'alternate', array("type"=>"application/rss+xml", "title"=>lang('recent activities feed'))); ?>
   <?php echo render_page_links(); ?> 
 
   <?php echo stylesheet_tag('project_website.css'); ?> 
@@ -33,8 +34,7 @@
       <!-- header -->
       <div id="headerWrapper">
         <div id="header">
-          <h1><a href="<?php echo get_url('dashboard') ?>"><?php echo $site_name ?></a></h1>
-          <h2><a href="<?php echo get_url('administration') ?>"><?php echo lang('administration') ?></a></h2>
+          <h1><a href="<?php echo get_url('dashboard', 'index') ?>"><?php echo $site_name ?></a> | <a href="<?php echo get_url('account', 'index') ?>"><?php echo lang('my account') ?></a></h1>
           <div id="userboxWrapper"><?php echo render_user_box(logged_user()) ?></div>
         </div>
       </div>
@@ -56,10 +56,10 @@
         <div id="crumbsBlock">
           <div id="crumbs">
 <?php if (is_array(bread_crumbs())) { ?>
-            <ul class="">
+            <ul>
 <?php foreach (bread_crumbs() as $bread_crumb) { ?>
 <?php if ($bread_crumb->getUrl()) { ?>
-              <li><a href="<?php echo $bread_crumb->getUrl() ?>"><?php echo clean($bread_crumb->getTitle()) ?></a>&raquo;</li>
+              <li><a href="<?php echo $bread_crumb->getUrl() ?>"><?php echo clean($bread_crumb->getTitle()) ?></a></li>
 <?php } else {?>
               <li><span><?php echo clean($bread_crumb->getTitle()) ?></span></li>
 <?php } // if {?>
@@ -76,7 +76,7 @@
         <div id="page_actionsWrapper">
           <div id="page_actionsBlock">
             <div id="page_actions">
-              <ul class="lavaLampxxImage">
+              <ul>
 <?php foreach (page_actions() as $page_action) { ?>
                 <li><a href="<?php echo $page_action->getURL() ?>"><?php echo clean($page_action->getTitle()) ?></a></li>
 <?php } // foreach ?>
@@ -89,10 +89,10 @@
 <?php } // if ?>
         <div id="innerContentWrapper">
 <?php if (!is_null(flash_get('success'))) { ?>
-          <div id="success" onclick="this.style.display = 'none'"><?php echo clean(flash_get('success')) ?></div>
+          <div id="success"><?php echo clean(flash_get('success')) ?></div>
 <?php } ?>
 <?php if (!is_null(flash_get('error'))) { ?>
-          <div id="error" onclick="this.style.display = 'none'"><?php echo clean(flash_get('error')) ?></div>
+          <div id="error"><?php echo clean(flash_get('error')) ?></div>
 <?php } ?>
 
           <h1 id="pageTitle"><?php echo get_page_title() ?></h1>
@@ -118,7 +118,7 @@
             <?php echo lang('footer copy without homepage', date('Y'), clean(owner_company()->getName())) ?>
 <?php } // if ?>
           </div>
-          <div id="productSignature"><?php echo product_signature() ?><span id="request_duration"><?php printf(' in %.3f seconds', (microtime(true) - $GLOBALS['request_start_time']) ); ?></span> <span id="current_datetime"><?php echo date('c/I[W]'); ?></span></div>
+          <div id="productSignature"><?php echo product_signature() ?><span id="request_duration"><?php printf(' in %.3f seconds', (microtime(true) - $GLOBALS['request_start_time']) ); ?></span> <span id="current_datetime"><?php echo date('c [W]'); ?></span></div>
         </div>
       </div>
       <!-- /content wrapper -->
