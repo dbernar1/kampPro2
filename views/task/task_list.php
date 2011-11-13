@@ -120,12 +120,10 @@
       <?php } // foreach ?>
     </table>
   </div>
-  <?php } else { ?>
-    <?php //echo lang('no open task in task list') ?>
   <?php } // if ?>
 <?php if ( count( $task_list_options ) || $task_list->canAddTask( logged_user() ) ): ?>
   <div class="options">
-    <?php echo implode(' | ', $task_list_options) ?>
+    <?php echo implode( ' | ', $task_list_options ) ?>
     <?php
     if ( $task_list->canAddTask( logged_user() ) ) {
       echo '<a href="#" class="add-to-task-list">' . lang( 'add task' ) . '</a>';
@@ -133,9 +131,7 @@
       $task = new ProjectTask();
       $task_data = array_var( $_POST, 'task' );
       if ( !is_array( $task_data ) ) {
-        $task_data = array(
-          'due_date' => DateTimeValueLib::now(),
-        ); // array
+        $task_data = array();
       } // if
       tpl_assign( 'task', $task );
       tpl_assign( 'task_data', $task_data );
