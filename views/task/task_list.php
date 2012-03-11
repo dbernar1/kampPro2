@@ -38,7 +38,7 @@
     <div class="openTasks">
       <table class="blank">
         <?php global $the_task; foreach ($task_list->getOpenTasks() as $task): $the_task = $task; ?>
-        <tr class="<?php odd_even_class($task_list_ln); ?>">
+        <tr id="task-id-<?php echo $task->getId() ?>" class="<?php odd_even_class($task_list_ln); ?>">
           <!-- Task text and options -->
           <td class="taskText">
             <div class="wrapper">

@@ -17,7 +17,7 @@ function task_edit_link() {
 function task_delete_link() {
   global $the_task;
   if ( $the_task->canDelete( logged_user() ) ) {
-    action_link( $the_task->getDeleteUrl(), 'icons/delete.png', 'delete' );
+    action_link( '#', 'icons/delete.png', 'delete', 'task-delete-link', array( 'data-task-id' => $the_task->getId() ) );
   }
 }
 

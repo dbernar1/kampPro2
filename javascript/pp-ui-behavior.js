@@ -76,6 +76,31 @@ $(function(){
         $(this).css({'width':p.css('width')});
       }
     });
+
+  // Deleting tasks without refreshing the page
+  $('.task-delete-link').click(function() {
+    var really_delete, task_id;
+    really_delete = confirm( 'Are you sure you want to delete this task? This can not be undone.' );
+    task_id = $( this ).data( 'taskId' );
+    if ( really_delete ) {
+      $.ajax( 'index.php', {
+        type: 'POST',
+        data: {
+          id: task_id,
+          c: 'task',
+          a: 'delete_task'
+        },
+        complete: function( jqXHR, textStatus ) {
+          if ( 200 === jqXHR.status ) {
+            $('#task-id-'+task_id).fadeOut('slow', function() { $(this).remove(); });
+          } else {
+            alert( jqXHR.responseText );
+          }
+        }
+      });
+    }
+    return false;
+  });
 });
 
 function post (url, d){
