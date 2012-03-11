@@ -191,7 +191,6 @@ background: url('../../images/layout/nav_arrow.png') no-repeat 100% 25px !import
  padding: 20px 26px 10px 6px;
 }
 
-#account_more_menu li:last-child a {background: none !important;} 
 
 #account_more_menu li ul a {background: #000 !important; }
 
